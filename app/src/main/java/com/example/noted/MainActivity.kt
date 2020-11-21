@@ -1,29 +1,42 @@
 package com.example.noted
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.navigation.Navigation
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
-import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-        val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment()
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+//        if (supportActionBar != null) {
+//            supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+//
+//            supportActionBar!!.setHomeButtonEnabled(false)
+//        }
+
+
+//        val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment()
 
         val navController = findNavController(R.id.nav_host_fragment)
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             navController.navigate(R.id.action_FirstFragment_to_SecondFragment)
             it.visibility = View.GONE
+            val backButton = findViewById<Toolbar>(R.id.toolbar).navigationIcon
+            backButton?.setVisible(true, false)
         }
 
 
@@ -34,9 +47,10 @@ class MainActivity : AppCompatActivity() {
 //                currentItem = 1
 
 //        val navController = findNavController(R.layout.fragment_first)
-//        view.findNavController().navigate(R.layout.fragment_second)
+//        view.findNavController().navigate(R.layout.create_note_fragment)
 
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -53,6 +67,8 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+
 }
 
 /*
