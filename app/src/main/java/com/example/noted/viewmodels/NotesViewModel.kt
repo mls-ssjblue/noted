@@ -1,4 +1,5 @@
 package com.example.noted.viewmodels
+
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelAssistedFactory
 import androidx.hilt.lifecycle.ViewModelInject
@@ -10,32 +11,35 @@ import com.example.noted.data.Note
 import com.example.noted.data.NoteRepository
 import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class  NotesViewModel @ViewModelInject internal constructor(
-    private val noteRepository: NoteRepository? = null
-): ViewModel() {
-    val notes : List<Note>? = noteRepository?.getNotes()
+class NotesViewModel @ViewModelInject internal constructor(
+    private val noteRepository: NoteRepository
+) : ViewModel() {
+
+    val notes: LiveData<List<Note>> = noteRepository.getNotes()
 
     fun addNote(note: Note) {
+
         viewModelScope.launch {
-            noteRepository?.insertNote(note)
+            noteRepository.insertNote(note)
         }
     }
 
 
 //    @AssistedInject.Factory
 //    interface AssistedFactory {
-//        fun create(noteId: String): NotesViewModel
+//        fun create(): NotesViewModel
 //    }
+//
 //    companion object {
 //        fun provideFactory(
-//            assistedFactory: AssistedFactory,
-//            noteId: String
-//        ) : ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+//            assistedFactory: AssistedFactory
+//        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
 //
 //            @Suppress("UNCHECKED_CAST")
-//            override fun <T:ViewModel ?> create (modelClass: Class<T>) :T {
-//                return assistedFactory.create(noteId) as T
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return assistedFactory.create() as T
 //            }
 //        }
 //    }

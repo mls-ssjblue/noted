@@ -3,10 +3,9 @@ package com.example.noted.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.example.noted.data.Note
 import com.example.noted.databinding.ListItemNoteBinding
 
@@ -49,7 +48,7 @@ class NotesAdapter
         }
 
         fun bind(item: Note) {
-            with(binding) {
+           binding.apply{
                 note = item
                 executePendingBindings()
             }
