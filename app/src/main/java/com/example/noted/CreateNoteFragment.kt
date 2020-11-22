@@ -24,11 +24,14 @@ class CreateNoteFragment : Fragment() {
 
     private val notesViewModel: NotesViewModel by viewModels()
 
+    private lateinit var noteId : String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        noteId = UUID.randomUUID().toString()
         return inflater.inflate(R.layout.create_note_fragment, container, false)
     }
 
@@ -43,11 +46,24 @@ class CreateNoteFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-//                saveDraftHandler.removeCallbacksAndMessages(null);
-////                saveDraftHandler.postDelayed({ saveDraft(p0.toString()) }
                 val title = view.findViewById<EditText>(R.id.note_title).text.toString()
                 val content = view.findViewById<EditText>(R.id.note_content).text.toString()
-                notesViewModel.addNote(Note(UUID.randomUUID().toString(), title, content))
+                notesViewModel.addNote(Note(noteId, title, content))
+            }
+        })
+
+        view.findViewById<EditText>(R.id.note_title).addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val title = view.findViewById<EditText>(R.id.note_title).text.toString()
+                val content = view.findViewById<EditText>(R.id.note_content).text.toString()
+
+                notesViewModel.addNote(Note(noteId, title, content))
             }
         })
     }
