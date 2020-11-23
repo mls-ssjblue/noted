@@ -8,21 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.noted.adapters.NotesAdapter
+import com.example.noted.data.Note
 import com.example.noted.databinding.HomeFragmentBinding
 import com.example.noted.viewmodels.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), NotesAdapter.NoteClickListener {
 
-    private val viewModel: NotesViewModel by viewModels ()
+    private val viewModel: NotesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,9 +28,8 @@ class HomeFragment : Fragment() {
         val binding = HomeFragmentBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-        val adapter = NotesAdapter()
+        val adapter = NotesAdapter(this)
         binding.noteList.adapter = adapter
-//        adapter.submitList(viewModel.notes.value)
 
         subscribeUi(adapter)
 
@@ -66,4 +62,10 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onClick(note: Note) {
+        val createNoteFragment = CreateNoteFragment()
+        val action = HomeFragmentDirections.actionHomeFragmentToCreateNoteFragment(note)
+        findNavController().navigate(action)
+    }
 }
+

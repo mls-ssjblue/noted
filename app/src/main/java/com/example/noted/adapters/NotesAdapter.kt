@@ -6,16 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.noted.CreateNoteFragment
 import com.example.noted.data.Note
 import com.example.noted.databinding.ListItemNoteBinding
 
-class NotesAdapter
-    : ListAdapter<Note, NotesAdapter.NoteViewHolder>(
-    NoteDiffCallBack()
-) {
 
+class NotesAdapter(val itemClickListener: NoteClickListener) :
+    ListAdapter<Note, NotesAdapter.NoteViewHolder>(NoteDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
+//        context = parent.context
+
         return NoteViewHolder(
             ListItemNoteBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -27,7 +28,7 @@ class NotesAdapter
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = getItem(position)
-        (holder as NoteViewHolder).bind(note)
+        (holder as NoteViewHolder).bind(note, itemClickListener)
     }
 
     class NoteViewHolder(
@@ -40,19 +41,30 @@ class NotesAdapter
                 }
             }
         }
+        fun bind(item: Note, noteClickListener: NoteClickListener) {
+            binding.apply {
+                note = item
+                executePendingBindings()
+            }
+            itemView.setOnClickListener{
+                noteClickListener.onClick(item)
+            }
+        }
 
         private fun navigateToNote(note: Note, view: View) {
+            val createNoteFragment = CreateNoteFragment()
+//            val activity = context as AppCompatActivity
+
+//            activity.supportFragmentManager.beginTransaction()
+//                .replace(R.id.list_container, createNoteFragment)
+//                .addToBackStack(null).commit()
+
 //            val direction = HomeViewPagerFragmentDirections
 //                .actionViewPagerFragmentToPlantDetailFragment(plantId)
 //            view.findNavController().navigate(direction)
         }
 
-        fun bind(item: Note) {
-           binding.apply{
-                note = item
-                executePendingBindings()
-            }
-        }
+
     }
 
     private class NoteDiffCallBack : DiffUtil.ItemCallback<Note>() {
@@ -65,5 +77,7 @@ class NotesAdapter
         }
     }
 
-
+    interface NoteClickListener {
+        fun onClick(note: Note)
+    }
 }

@@ -18,25 +18,32 @@ import java.util.*
 @AndroidEntryPoint
 class CreateNoteFragment : Fragment() {
 
-
-//    @Inject
-//    lateinit var notesViewModelFactory: NotesViewModel.AssistedFactory
-
     private val notesViewModel: NotesViewModel by viewModels()
 
-    private lateinit var noteId : String
+    private lateinit var noteId: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        noteId = UUID.randomUUID().toString()
         return inflater.inflate(R.layout.create_note_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val bundle = arguments
+        if (bundle != null) {
+            val existingNote = bundle.get("note") as? Note
+            if (existingNote != null) {
+                noteId = existingNote.noteId
+                requireView().findViewById<EditText>(R.id.note_title).setText(existingNote.title)
+                requireView().findViewById<EditText>(R.id.note_content)
+                    .setText(existingNote.content)
+            } else {
+                noteId = UUID.randomUUID().toString()
+            }
+        }
 
         view.findViewById<EditText>(R.id.note_content).addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

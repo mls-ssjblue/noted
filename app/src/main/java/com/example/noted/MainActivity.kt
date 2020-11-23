@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment)
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            navController.navigate(R.id.action_FirstFragment_to_SecondFragment)
+            navController.navigate(R.id.action_HomeFragment_to_CreateNoteFragment)
             it.visibility = View.GONE
             val backButton = findViewById<Toolbar>(R.id.toolbar).navigationIcon
             backButton?.setVisible(true, false)
