@@ -1,12 +1,10 @@
 package com.example.noted.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.noted.CreateNoteFragment
 import com.example.noted.data.Note
 import com.example.noted.databinding.ListItemNoteBinding
 
@@ -28,43 +26,23 @@ class NotesAdapter(val itemClickListener: NoteClickListener) :
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = getItem(position)
-        (holder as NoteViewHolder).bind(note, itemClickListener)
+        holder.bind(note, itemClickListener)
     }
+
 
     class NoteViewHolder(
         private val binding: ListItemNoteBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.setClickListener { view ->
-                binding.note?.let { note ->
-                    navigateToNote(note, view)
-                }
-            }
-        }
+
         fun bind(item: Note, noteClickListener: NoteClickListener) {
             binding.apply {
                 note = item
                 executePendingBindings()
             }
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 noteClickListener.onClick(item)
             }
         }
-
-        private fun navigateToNote(note: Note, view: View) {
-            val createNoteFragment = CreateNoteFragment()
-//            val activity = context as AppCompatActivity
-
-//            activity.supportFragmentManager.beginTransaction()
-//                .replace(R.id.list_container, createNoteFragment)
-//                .addToBackStack(null).commit()
-
-//            val direction = HomeViewPagerFragmentDirections
-//                .actionViewPagerFragmentToPlantDetailFragment(plantId)
-//            view.findNavController().navigate(direction)
-        }
-
-
     }
 
     private class NoteDiffCallBack : DiffUtil.ItemCallback<Note>() {
@@ -79,5 +57,20 @@ class NotesAdapter(val itemClickListener: NoteClickListener) :
 
     interface NoteClickListener {
         fun onClick(note: Note)
+    }
+
+    sealed class DataItem {
+
+        abstract val id: String
+
+        data class NoteItem(val note: Note) : DataItem() {
+            override val id = note.noteId
+        }
+
+        object Header : DataItem() {
+            override val id = "headerId"
+        }
+
+
     }
 }
