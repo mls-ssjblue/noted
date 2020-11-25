@@ -22,32 +22,13 @@ class MainActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-//        if (supportActionBar != null) {
-//            supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-//
-//            supportActionBar!!.setHomeButtonEnabled(false)
-//        }
-
-
-//        val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment()
-
         val navController = findNavController(R.id.nav_host_fragment)
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             navController.navigate(R.id.action_HomeFragment_to_CreateNoteFragment)
             it.visibility = View.GONE
-            val backButton = findViewById<Toolbar>(R.id.toolbar).navigationIcon
+            val backButton = toolbar.navigationIcon
             backButton?.setVisible(true, false)
         }
-
-
-    }
-
-    private fun navigateToAddNoteScreen(view: View) {
-//        findViewById<ViewPager2>(R.id.view_pager).
-//                currentItem = 1
-
-//        val navController = findNavController(R.layout.fragment_first)
-//        view.findNavController().navigate(R.layout.create_note_fragment)
 
     }
 
@@ -70,20 +51,3 @@ class MainActivity : AppCompatActivity() {
 
 
 }
-
-/*
-
-purple.setOnClickListener(new OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Fragment fragment = new tasks();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.content_frame, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
-});
-
-
- */

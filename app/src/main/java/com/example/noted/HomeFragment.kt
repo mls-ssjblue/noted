@@ -39,7 +39,7 @@ class HomeFragment : Fragment(), NotesAdapter.NoteClickListener {
 
     private fun subscribeUi(adapter: NotesAdapter) {
         viewModel.notes.observe(viewLifecycleOwner) { notes ->
-            adapter.submitList(notes)
+            adapter.addHeaderAndSubmitList(notes)
         }
     }
 
