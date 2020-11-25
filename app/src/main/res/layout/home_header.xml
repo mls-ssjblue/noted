@@ -3,10 +3,13 @@
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:fontFamily="@font/fira_sans_medium"
-    android:gravity="center"
+    android:gravity="left"
     android:id="@+id/textView"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:text="Your Notes"
+    android:layout_marginStart="10dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
     android:textSize="30sp" />
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#8AC4FD"
     tools:context=".MainActivity">
 
     <!--    <androidx.viewpager2.widget.ViewPager2-->
@@ -26,13 +26,15 @@
             android:layout_height="?attr/actionBarSize"
             android:background="#1976D2"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
         android:id="@+id/include"
         layout="@layout/content_main"
+        android:background="#0288D1"
         app:layout_anchor="@+id/view_pager"
         app:layout_anchorGravity="center" />
 
