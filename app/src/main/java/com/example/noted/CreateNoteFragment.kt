@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.noted.data.Note
 import com.example.noted.viewmodels.NotesViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -75,4 +76,8 @@ class CreateNoteFragment : Fragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        activity?.findViewById<FloatingActionButton>(R.id.fab)?.visibility = View.GONE
+    }
 }
