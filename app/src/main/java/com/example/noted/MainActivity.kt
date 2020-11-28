@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-
         toolbar.setNavigationOnClickListener {
             hideKeyboard()
             onBackPressed()
@@ -66,6 +65,10 @@ class MainActivity : AppCompatActivity() {
                 InputMethodManager.HIDE_NOT_ALWAYS
             )
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        return false
     }
 
 }

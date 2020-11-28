@@ -27,13 +27,11 @@ class HomeFragment : Fragment(), NotesAdapter.NoteClickListener {
     ): View? {
         val binding = HomeFragmentBinding.inflate(inflater, container, false)
         context ?: return binding.root
-
         val adapter = NotesAdapter(this)
         binding.noteList.adapter = adapter
 
         subscribeUi(adapter)
 
-        setHasOptionsMenu(true)
         return binding.root
     }
 
