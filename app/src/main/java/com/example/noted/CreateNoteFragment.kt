@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.example.noted.data.Note
 import com.example.noted.viewmodels.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,6 +29,7 @@ class CreateNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.create_note_fragment, container, false)
     }
 
@@ -79,5 +82,17 @@ class CreateNoteFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity?.findViewById<FloatingActionButton>(R.id.fab)?.visibility = View.GONE
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.delete_note -> {
+                notesViewModel.deleteNote(noteId)
+                val navController = activity?.findNavController(R.id.nav_host_fragment)
+                navController?.navigate(R.id.action_CreateNoteFragment_to_HomeFragment)
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

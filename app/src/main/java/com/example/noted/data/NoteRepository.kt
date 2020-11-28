@@ -10,4 +10,6 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
     suspend fun insertNote(note: Note) = noteDao.insert(note)
 
     fun getNotes() : LiveData<List<Note>> = noteDao.getAllNotes()
+
+    suspend fun deleteNote(noteId: String) = noteDao.delete(noteId)
 }

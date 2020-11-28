@@ -1,10 +1,7 @@
 package com.example.noted.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface NoteDao {
@@ -14,4 +11,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM notes")
     fun getAllNotes(): LiveData<List<Note>>
+
+    @Query("DELETE FROM notes where id= :noteId")
+    suspend fun delete(noteId: String)
 }
