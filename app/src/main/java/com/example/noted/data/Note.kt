@@ -5,17 +5,22 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDateTime
 
 @Entity(tableName = "notes")
 data class Note(
     @PrimaryKey @ColumnInfo(name = "id") val noteId: String,
     @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "content") val content: String
+    @ColumnInfo(name = "content") val content: String,
+    @ColumnInfo(name = "category") val category: String,
+    @ColumnInfo(name= "lastModified") val lastModified: LocalDateTime
 ) : Parcelable {
-    constructor(parcel: Parcel) : this(
+constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!
+        parcel.readString()!!,
+        parcel.readString()!!,
+        LocalDateTime.parse(parcel.readString())!!
     ) {
     }
 
@@ -23,6 +28,7 @@ data class Note(
         parcel.writeString(noteId)
         parcel.writeString(title)
         parcel.writeString(content)
+        parcel.writeString(category)
     }
 
     override fun describeContents(): Int {

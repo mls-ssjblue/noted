@@ -15,6 +15,7 @@ import com.example.noted.data.Note
 import com.example.noted.viewmodels.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -59,7 +60,8 @@ class CreateNoteFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 val title = view.findViewById<EditText>(R.id.note_title).text.toString()
                 val content = view.findViewById<EditText>(R.id.note_content).text.toString()
-                notesViewModel.addNote(Note(noteId, title, content))
+                val category = "Tasks"
+                notesViewModel.addNote(Note(noteId, title, content, category, LocalDateTime.now()))
             }
         })
 
@@ -73,8 +75,9 @@ class CreateNoteFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 val title = view.findViewById<EditText>(R.id.note_title).text.toString()
                 val content = view.findViewById<EditText>(R.id.note_content).text.toString()
+                val category = "Tasks"
 
-                notesViewModel.addNote(Note(noteId, title, content))
+                notesViewModel.addNote(Note(noteId, title, content, category, LocalDateTime.now()))
             }
         })
     }
